@@ -15,7 +15,7 @@ const MemberList = () => {
             key={member.id}
             id={member.id}
             name={member.name}
-            description={member.description}
+            nickname={member.nickname}
           />
         ))}
     </StyledMemberListWrap>

@@ -1,15 +1,31 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useAttendanceState } from "../context/AttendContext";
+import {
+  useAttendanceDispatch,
+  useAttendanceState,
+} from "../context/AttendContext";
 
-const Member = ({ id, name, description }) => {
+const Member = ({ id, name, nickname }) => {
+  const dispatch = useAttendanceDispatch();
   const state = useAttendanceState();
   const theme = state.themeDark;
 
+  const deleteMember = () => {
+    dispatch({ type: "DELETE_MEMBER", id });
+  };
+
   return (
     <StyledMemberBox>
-      <StyledName themeDark={theme}>{name}</StyledName>
-      <StyledDec>{description}</StyledDec>
+      <StyledLink to={`./member_detail/${name}`}>
+        <StyledName themeDark={theme}>
+          {name}
+          <StyledNickname>({nickname})</StyledNickname>
+        </StyledName>
+      </StyledLink>
+      <StyledButton themeDark={theme} onClick={deleteMember}>
+        Delete
+      </StyledButton>
     </StyledMemberBox>
   );
 };
@@ -17,6 +33,12 @@ const Member = ({ id, name, description }) => {
 const StyledMemberBox = styled.div`
   margin: 0;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 const StyledName = styled.h4`
   font-size: 20px;
@@ -30,10 +52,27 @@ const StyledName = styled.h4`
       color: #fff;
     `}
 `;
-const StyledDec = styled.p`
-  font-size: 14px;
-  color: #888;
-  margin: 0;
+const StyledNickname = styled.span`
+  font-size: 16px;
+  font-weight: 400;
+`;
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  height: 20px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+
+  color: #fff;
+  background-color: #1a1a1a;
+  ${(theme) =>
+    theme.themeDark &&
+    css`
+      color: #1a1a1a;
+      background-color: #fff;
+    `}
 `;
 
 export default Member;

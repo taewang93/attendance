@@ -11,8 +11,8 @@ const initialAttendance = {
     },
     {
       id: 2,
-      name: "ham",
-      nickname: "hyemi",
+      name: "hyemi",
+      nickname: "ham",
       description: "hamham",
     },
     {
@@ -37,6 +37,11 @@ const AttendanceReducer = (state, action) => {
       return {
         themeDark: state.themeDark,
         members: [...state.members, action.newMember],
+      };
+    case "DELETE_MEMBER":
+      return {
+        themeDark: state.themeDark,
+        members: state.members.filter((member) => member.id !== action.id),
       };
   }
 };
